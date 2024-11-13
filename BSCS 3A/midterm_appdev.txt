@@ -1,0 +1,254 @@
+----------------xml---------------------
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <CheckBox
+        android:id="@+id/pencil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="311dp"
+        android:layout_x="46dp"
+        android:layout_y="97dp"
+        android:text="Pencil" />
+
+    <CheckBox
+        android:id="@+id/Papercheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="49dp"
+        android:layout_y="157dp"
+        android:text="Paper" />
+
+    <CheckBox
+        android:id="@+id/Pastecheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="47dp"
+        android:layout_y="208dp"
+        android:text="Paste" />
+
+    <CheckBox
+        android:id="@+id/Erasercheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="46dp"
+        android:layout_y="257dp"
+        android:text="Eraser" />
+
+    <EditText
+        android:id="@+id/QtyPencil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="161dp"
+        android:layout_y="102dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/QtyPaper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="161dp"
+        android:layout_y="162dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/QtyPaste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="161dp"
+        android:layout_y="217dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/QtyEraser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="163dp"
+        android:layout_y="263dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="" />
+
+    <RadioGroup
+        android:id="@+id/discountGroup"
+        android:layout_width="69dp"
+        android:layout_height="123dp"
+        android:layout_x="40dp"
+        android:layout_y="331dp">
+
+        <RadioButton
+            android:id="@+id/radioButton10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10%" />
+
+        <RadioButton
+            android:id="@+id/radioButton20"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="20%" />
+
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="164dp"
+        android:layout_height="34dp"
+        android:layout_x="206dp"
+        android:layout_y="335dp"
+        android:hint="Price"
+        android:text="" />
+
+</AbsoluteLayout>
+
+-------------java--------------
+
+package com.example.midterm;
+
+// MainActivity.java
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.midterm.R;
+
+public class MainActivity extends AppCompatActivity {
+
+    // Prices for the items
+    private static final int PRICE_PENCIL = 15;
+    private static final int PRICE_PAPER = 20;
+    private static final int PRICE_PASTE = 5;
+    private static final int PRICE_ERASER = 5;
+
+    private CheckBox checkBoxPencil, checkBoxPaper, checkBoxPaste, checkBoxEraser;
+    private EditText qtyPencil, qtyPaper, qtyPaste, qtyEraser;
+    private TextView priceTextView;
+    private RadioGroup discountGroup;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        checkBoxPencil = findViewById(R.id.pencil);
+        checkBoxPaper = findViewById(R.id.Papercheck);
+        checkBoxPaste = findViewById(R.id.Pastecheck); // Update the ID as needed
+        checkBoxEraser = findViewById(R.id.Erasercheck); // Update the ID as needed
+
+        qtyPencil = findViewById(R.id.QtyPencil);
+        qtyPaper = findViewById(R.id.QtyPaper);
+        qtyPaste = findViewById(R.id.QtyPaste);
+        qtyEraser = findViewById(R.id.QtyEraser);
+
+        priceTextView = findViewById(R.id.textView);
+        discountGroup = findViewById(R.id.discountGroup); // Update the ID as needed
+
+        // Set default quantities to 1
+        qtyPencil.setText("1");
+        qtyPaper.setText("1");
+        qtyPaste.setText("1");
+        qtyEraser.setText("1");
+
+        // Add listeners to update price when the quantity or checkbox changes
+        addTextChangeListener(qtyPencil);
+        addTextChangeListener(qtyPaper);
+        addTextChangeListener(qtyPaste);
+        addTextChangeListener(qtyEraser);
+
+        checkBoxPencil.setOnCheckedChangeListener((buttonView, isChecked) -> calculatePrice());
+        checkBoxPaper.setOnCheckedChangeListener((buttonView, isChecked) -> calculatePrice());
+        checkBoxPaste.setOnCheckedChangeListener((buttonView, isChecked) -> calculatePrice());
+        checkBoxEraser.setOnCheckedChangeListener((buttonView, isChecked) -> calculatePrice());
+
+        discountGroup.setOnCheckedChangeListener((group, checkedId) -> calculatePrice());
+
+        // Initial price calculation
+        calculatePrice();
+    }
+
+    private void addTextChangeListener(EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                calculatePrice();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
+    private void calculatePrice() {
+        int total = 0;
+
+        // Calculate price for pencils
+        if (checkBoxPencil.isChecked()) {
+            int qty = getQuantity(qtyPencil);
+            total += qty * PRICE_PENCIL;
+        }
+
+        // Calculate price for papers
+        if (checkBoxPaper.isChecked()) {
+            int qty = getQuantity(qtyPaper);
+            total += qty * PRICE_PAPER;
+        }
+
+        // Calculate price for paste
+        if (checkBoxPaste.isChecked()) {
+            int qty = getQuantity(qtyPaste);
+            total += qty * PRICE_PASTE;
+        }
+
+        // Calculate price for erasers
+        if (checkBoxEraser.isChecked()) {
+            int qty = getQuantity(qtyEraser);
+            total += qty * PRICE_ERASER;
+        }
+
+        // Apply discount based on selected radio button
+        int checkedRadioButtonId = discountGroup.getCheckedRadioButtonId();
+        if (checkedRadioButtonId == R.id.radioButton10) {
+            total *= 0.9;
+        } else if (checkedRadioButtonId == R.id.radioButton20) {
+            total *= 0.8;
+        }
+
+
+        priceTextView.setText("Total Price: " + total);
+    }
+
+    private int getQuantity(EditText editText) {
+        String qtyString = editText.getText().toString();
+        if (!qtyString.isEmpty()) {
+            return Integer.parseInt(qtyString);
+        }
+        return 1; // Default quantity is 1
+    }
+}

@@ -1,0 +1,302 @@
+-----xml-----
+
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_x="0dp"
+    android:layout_y="0dp"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_x="0dp"
+        android:layout_y="0dp"
+        android:background="#494343"
+        android:cursorVisible="false"
+        android:editable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="end"
+        android:hint="0"
+        android:inputType="none"
+        android:padding="16dp"
+        android:textSize="32sp" />
+
+
+    <Button
+        android:id="@+id/button_subtract"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_x="144dp"
+        android:layout_y="111dp"
+        android:text="-"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_multiply"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_x="270dp"
+        android:layout_y="110dp"
+        android:text="*"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_9"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="270dp"
+        android:layout_y="208dp"
+        android:text="9"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_8"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="144dp"
+        android:layout_y="211dp"
+        android:text="8"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_7"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="12dp"
+        android:layout_y="208dp"
+        android:text="7"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_4"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="12dp"
+        android:layout_y="314dp"
+        android:text="4"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_5"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="146dp"
+        android:layout_y="314dp"
+        android:text="5"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_6"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="270dp"
+        android:layout_y="314dp"
+        android:text="6"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_3"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="270dp"
+        android:layout_y="423dp"
+        android:text="3"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_1"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="12dp"
+        android:layout_y="423dp"
+        android:text="1"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_0"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="12dp"
+        android:layout_y="534dp"
+        android:text="0"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_equals"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="140dp"
+        android:layout_y="534dp"
+        android:text="="
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_divide"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="270dp"
+        android:layout_y="534dp"
+        android:text="/"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_2"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_x="146dp"
+        android:layout_y="423dp"
+        android:text="2"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_x="12dp"
+        android:layout_y="110dp"
+        android:text="+"
+        android:textSize="24sp" />
+    <Button
+        android:id="@+id/button_ac"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_x="15dp"
+        android:layout_y="625dp"
+        android:text="AC"
+        android:textSize="24sp" />
+
+</AbsoluteLayout>
+
+-----MainActivity.java-----
+
+package com.example.cindy_calculator;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText display;
+    private double operand1 = Double.NaN;
+    private double operand2 = Double.NaN;
+    private String operator = "";
+    private boolean isOperatorClicked = false;
+    private double result = Double.NaN;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        display = findViewById(R.id.display);
+
+        Button button1 = findViewById(R.id.button_1);
+        Button button2 = findViewById(R.id.button_2);
+        Button button3 = findViewById(R.id.button_3);
+        Button button4 = findViewById(R.id.button_4);
+        Button button5 = findViewById(R.id.button_5);
+        Button button6 = findViewById(R.id.button_6);
+        Button button7 = findViewById(R.id.button_7);
+        Button button8 = findViewById(R.id.button_8);
+        Button button9 = findViewById(R.id.button_9);
+        Button button0 = findViewById(R.id.button_0);
+
+        Button buttonAdd = findViewById(R.id.button_add);
+        Button buttonSubtract = findViewById(R.id.button_subtract);
+        Button buttonMultiply = findViewById(R.id.button_multiply);
+        Button buttonDivide = findViewById(R.id.button_divide);
+
+        Button buttonEquals = findViewById(R.id.button_equals);
+
+        View.OnClickListener numberClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Button button = (Button) view;
+                display.append(button.getText().toString());
+                isOperatorClicked = false;
+            }
+        };
+
+        button1.setOnClickListener(numberClickListener);
+        button2.setOnClickListener(numberClickListener);
+        button3.setOnClickListener(numberClickListener);
+        button4.setOnClickListener(numberClickListener);
+        button5.setOnClickListener(numberClickListener);
+        button6.setOnClickListener(numberClickListener);
+        button7.setOnClickListener(numberClickListener);
+        button8.setOnClickListener(numberClickListener);
+        button9.setOnClickListener(numberClickListener);
+        button0.setOnClickListener(numberClickListener);
+
+        View.OnClickListener operatorClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Button button = (Button) view;
+                operator = button.getText().toString();
+                operand1 = Double.parseDouble(display.getText().toString());
+                display.setText("");
+                isOperatorClicked = true;
+            }
+        };
+
+        buttonAdd.setOnClickListener(operatorClickListener);
+        buttonSubtract.setOnClickListener(operatorClickListener);
+        buttonMultiply.setOnClickListener(operatorClickListener);
+        buttonDivide.setOnClickListener(operatorClickListener);
+
+        buttonEquals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                operand2 = Double.parseDouble(display.getText().toString());
+                switch (operator) {
+                    case "+":
+                        result = operand1 + operand2;
+                        break;
+                    case "-":
+                        result = operand1 - operand2;
+                        break;
+                    case "*":
+                        result = operand1 * operand2;
+                        break;
+                    case "/":
+                        if (operand2 != 0) {
+                            result = operand1 / operand2;
+                        } else {
+                            display.setText("Error");
+                            return;
+                        }
+                        break;
+                }
+                display.setText(String.valueOf(result));
+                operand1 = result;
+                operand2 = Double.NaN;
+                operator = "";
+                isOperatorClicked = false;
+            }
+        });
+        Button buttonAc = findViewById(R.id.button_ac);
+        buttonAc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                operand1 = Double.NaN;
+                operand2 = Double.NaN;
+                operator = "";
+                isOperatorClicked = false;
+                result = Double.NaN;
+                display.setText("");
+            }
+        });
+    }
+}
+
+
+
+

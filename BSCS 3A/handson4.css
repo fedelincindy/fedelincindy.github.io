@@ -1,0 +1,19 @@
+body {
+  background-color:  #d2dc9d;
+  font-family: Times New Roman;
+}
+
+h1 {
+  color: #939;
+}
+
+h2 {
+  color: #c60;
+}
+
+#header {
+  background-color:rgba(255, 255, 255, 0.5);
+}
+#footer{
+  text-align: left;
+}
